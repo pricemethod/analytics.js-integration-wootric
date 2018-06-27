@@ -305,6 +305,14 @@ describe('Wootric', function() {
         analytics.assert(!window.wootricSettings.properties.email);
         analytics.assert(!window.wootricSettings.properties.createdAt);
       });
+
+      it('should keep email from identify event if future track events dont have one', function() {
+        analytics.identify({
+          email: 'shawn@shawnmorgan.com'
+        });
+        analytics.track('unrelated_event');
+        analytics.equal(window.wootricSettings.email, 'shawn@shawnmorgan.com');
+      });
     });
   });
 });
